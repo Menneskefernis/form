@@ -73,11 +73,30 @@ hgroup h2 {
 }
 
 form {
-  margin-top: 50px;
+  margin: 50px auto;
+  width: 250px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 form > div {
+  position: relative;
   margin-bottom: 20px;
+}
+
+form > div .error {
+  display: none;
+  position: absolute;
+  left: 300px;
+  bottom: 3px;
+  width: 200px;
+  border: 1px solid black;
+  padding: 5px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+form > div .error.show {
+  display: block;
 }
 
 form label {
@@ -89,6 +108,14 @@ form input,
 form button {
   width: 250px;
   height: 30px;
+  outline: none;
+}
+
+form input:invalid,
+form button:invalid {
+  border: 1px solid red;
+  -webkit-box-shadow: 0 0 3px red;
+          box-shadow: 0 0 3px red;
 }
 
 form button {

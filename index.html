@@ -11,28 +11,34 @@
         <h1>A Form!</h1>
         <h2>Give Me Your Personal Information</h2>
     </hgroup>
-    <form>
+    <form id="form" action="high-five.html" novalidate>
         <div>
             <label for="email">Email</label>
-            <input type="email" name="email">
+            <input type="email" name="email" minlength="8" required autofocus>
+            <div class="error">There's something wong!</div>
         </div>
         <div>
             <label for="country">Country</label>
-            <input type="text" name="country">
+            <input type="text" name="country" required>
+            <div class="error">There's something wong!</div>
         </div>
         <div>
             <label for="zip">Zip Code</label>
-            <input type="text" name="zip">
+            <input type="number" name="zip" required>
+            <div class="error">There's something wong!</div>
         </div>
         <div>
             <label for="password">Password</label>
-            <input type="password" name="password">
+            <input type="password" name="password" required>
+            <div class="error">There's something wong!</div>
         </div>
         <div>
             <label for="password-confirmation">Confirm Password</label>
-            <input type="password" name="password-confirmation">
+            <input type="password" name="password-confirmation" required>
+            <div class="error">There's something wong!</div>
         </div>
         <button>Submit your info (it will be SO safe!)</button>
     </form>
+    <script src="./main.js"></script>
 </body>
 </html>
