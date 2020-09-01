@@ -35,6 +35,13 @@ const getErrorMessage = (target) => {
     case 'zip':
       message = messages().getZipMessage(target);
       break;
+    case 'password':
+      message = messages().getPasswordMessage(target);
+      break;
+    case 'password-confirmation':
+      console.log('john')
+      message = messages().getPasswordConfirmationMessage();
+      break;
   }
   return message;
 };
@@ -50,9 +57,8 @@ const messages = () => {
   };
   
   const getCountryMessage = (target) => {
-    console.log(target.validity.patternMismatch)
     if (target.validity.patternMismatch) {
-      return 'Country name can not have any numbers';
+      return 'Country name can not contain any numbers';
     }
     if(target.validity.tooShort) {
       return `Country should be at least ${ target.minLength } characters`;
@@ -60,22 +66,38 @@ const messages = () => {
   };
 
   const getZipMessage = (target) => {
-    
     if (target.validity.patternMismatch) {
-      return "Zip should be exactly 4 numbers, or be in the format DK-0000";
+      return "Zip should be in the format DK-0000 (yes, a Danish post code)";
     }
   };
 
-  return { getEmailMessage, getCountryMessage, getZipMessage };
+  const getPasswordMessage = (target) => {
+    if (target.validity.patternMismatch) {
+      return `Password must have:<br>
+      - A length of at least 8<br>
+      - One or more uppercase characters<br>
+      - One or more lowercase characters<br>
+      - One or more numeric values<br>
+      - One or more special characters
+      `;
+    }
+  };
+
+  const getPasswordConfirmationMessage = () => {
+    const password = form.password.value;
+    const passwordConfirmationValue = form['password-confirmation'].value;
+    console.log(password)
+    console.log(passwordConfirmationValue)
+  };
+
+  return { getEmailMessage, getCountryMessage, getZipMessage, getPasswordMessage, getPasswordConfirmationMessage };
 };
 
 
 
-
-
-const renderError = (errorElem, message) => {
-  //errorElem.textContent = message;
-  errorElem.classList.add('show');
+const renderError = (errorElement, message) => {
+  errorElement.querySelector('p').innerHTML = message;
+  errorElement.classList.add('show');
 };
 
 const clearError = (errorElem) => {

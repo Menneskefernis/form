@@ -16,29 +16,41 @@
             <label for="email">Email</label>
             <input type="email" name="email" minlength="8" maxlength="50" required autofocus>
             <div class="error">
-                There's something wong!
+                <p>There's something wong!</p>
                 <div class="caret"></div>
             </div>
         </div>
         <div>
             <label for="country">Country</label>
-            <input type="text" name="country" minlength="3" maxlength="50" pattern="/\d$/" required>
-            <div class="error">There's something wong!</div>
+            <input type="text" name="country" minlength="3" maxlength="50" pattern="^[A-Za-z]+$" required>
+            <div class="error">
+                <p>There's something wong!</p>
+                <div class="caret"></div>
+            </div>
         </div>
         <div>
             <label for="zip">Zip Code</label>
-            <input type="text" name="zip" pattern="/d{4}$/" required>
-            <div class="error">There's something wong!</div>
+            <input type="text" name="zip" maxlength="20" pattern="^[D-d][K-k]( |-)[1-9]{1}[0-9]{3}$" required>
+            <div class="error">
+                <p>There's something wong!</p>
+                <div class="caret"></div>
+            </div>
         </div>
         <div>
             <label for="password">Password</label>
-            <input type="password" name="password" required>
-            <div class="error">There's something wong!</div>
+            <input type="password" name="password" maxlength="50" pattern="(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required>
+            <div class="error">
+                <p>There's something wong!</p>
+                <div class="caret"></div>
+            </div>
         </div>
         <div>
             <label for="password-confirmation">Confirm Password</label>
             <input type="password" name="password-confirmation" required>
-            <div class="error">There's something wong!</div>
+            <div class="error">
+                <p>There's something wong!</p>
+                <div class="caret"></div>
+            </div>
         </div>
         <button>Submit your info (it will be SO safe!)</button>
     </form>
