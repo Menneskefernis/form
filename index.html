@@ -14,17 +14,20 @@
     <form id="form" action="high-five.html" novalidate>
         <div>
             <label for="email">Email</label>
-            <input type="email" name="email" minlength="8" required autofocus>
-            <div class="error">There's something wong!</div>
+            <input type="email" name="email" minlength="8" maxlength="50" required autofocus>
+            <div class="error">
+                There's something wong!
+                <div class="caret"></div>
+            </div>
         </div>
         <div>
             <label for="country">Country</label>
-            <input type="text" name="country" required>
+            <input type="text" name="country" minlength="3" maxlength="50" pattern="/\d$/" required>
             <div class="error">There's something wong!</div>
         </div>
         <div>
             <label for="zip">Zip Code</label>
-            <input type="number" name="zip" required>
+            <input type="text" name="zip" pattern="/d{4}$/" required>
             <div class="error">There's something wong!</div>
         </div>
         <div>

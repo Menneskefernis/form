@@ -86,17 +86,30 @@ form > div {
 form > div .error {
   display: none;
   position: absolute;
-  left: 300px;
-  bottom: 3px;
+  left: 280px;
   width: 200px;
   border: 1px solid black;
-  padding: 5px;
+  padding: 7px;
   border-radius: 4px;
   font-size: 14px;
 }
 
 form > div .error.show {
   display: block;
+}
+
+form > div .error .caret {
+  position: absolute;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  background: white;
+  top: calc(50% - 9px);
+  left: -10px;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+  height: 18px;
+  width: 18px;
+  z-index: 1;
 }
 
 form label {

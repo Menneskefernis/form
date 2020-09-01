@@ -7,46 +7,74 @@ const validateEmail = (e) => {
   if (target.validity.valid) {
     clearError(errorElement);
   } else {
-    //positionError(target, errorElement);
-    if (target.validity.valueMissing) {
-      renderError(errorElement, 'You have to fill in stuff');  
-    } else {
-      renderError(errorElement, getErrorMessage(target));
-    }
+    renderError(errorElement, getErrorMessage(target));
+    positionError(target, errorElement);
   }
 };
 
 const positionError = (target, errorElement) => {
-  const rightEdge = target.getBoundingClientRect().right;
-  console.log(rightEdge)
-  errorElement.style.left = `${rightEdge}px`;
+  const targetHeight = target.getBoundingClientRect().height;
+  const errorHeight = errorElement.getBoundingClientRect().height;
+  const difference = errorHeight - targetHeight;
+
+  errorElement.style.bottom = `${-(difference / 2)}px`;
 };
 
 const getErrorMessage = (target) => {
+  if (target.validity.valueMissing) return 'You have to fill in stuff';
+  
   let message = '';
+  
   switch (target.name) {
     case 'email':
-      message = getEmailMessage(target);
-      //message = 'You have to do something here';
+      message = messages().getEmailMessage(target);
       break;
     case 'country':
-      message = 'Do another thing here';
+      message = messages().getCountryMessage(target);
+      break;
+    case 'zip':
+      message = messages().getZipMessage(target);
       break;
   }
   return message;
 };
 
-const getEmailMessage = (target) => {
-  if(target.validity.typeMismatch) {
-    return 'Entered value needs to be an e-mail address.';
-  }
-  if(target.validity.tooShort) {
-    return `Email should be at least ${ target.minLength } characters; you entered ${ target.value.length }.`;
-  }
+const messages = () => {
+  const getEmailMessage = (target) => {
+    if(target.validity.typeMismatch) {
+      return 'Entered value needs to be an e-mail address.';
+    }
+    if(target.validity.tooShort) {
+      return `Email should be at least ${ target.minLength } characters`;
+    }
+  };
+  
+  const getCountryMessage = (target) => {
+    console.log(target.validity.patternMismatch)
+    if (target.validity.patternMismatch) {
+      return 'Country name can not have any numbers';
+    }
+    if(target.validity.tooShort) {
+      return `Country should be at least ${ target.minLength } characters`;
+    }
+  };
+
+  const getZipMessage = (target) => {
+    
+    if (target.validity.patternMismatch) {
+      return "Zip should be exactly 4 numbers, or be in the format DK-0000";
+    }
+  };
+
+  return { getEmailMessage, getCountryMessage, getZipMessage };
 };
 
+
+
+
+
 const renderError = (errorElem, message) => {
-  errorElem.textContent = message;
+  //errorElem.textContent = message;
   errorElem.classList.add('show');
 };
 
