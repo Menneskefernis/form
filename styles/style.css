@@ -164,7 +164,7 @@ form button {
 
 @-webkit-keyframes error-animation {
   from {
-    left: 200%;
+    left: 150%;
     opacity: 0;
   }
   to {
@@ -175,7 +175,7 @@ form button {
 
 @keyframes error-animation {
   from {
-    left: 200%;
+    left: 150%;
     opacity: 0;
   }
   to {
