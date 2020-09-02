@@ -1,5 +1,16 @@
 const form = document.getElementById('form');
 
+const validateForm = (e) => {
+  if (!form.checkValidity()) {
+    e.preventDefault();
+    Array.from(form.elements).forEach(element => {
+      if (element.name !== 'submit') {
+        validateField(element);
+      }
+    });
+  }
+};
+
 const validateField = (e) => {
   let target = e.target;
   if (!target) target = e;
@@ -26,32 +37,34 @@ const positionError = (target, errorElement) => {
 };
 
 const getErrorMessage = (target) => {
-  if (target.validity.valueMissing) return 'You have to fill in stuff';
+  if (target.validity.valueMissing) return messages().emptyField;
   
   let message = '';
   
   switch (target.name) {
     case 'email':
-      message = messages().getEmailMessage(target);
+      message = messages().email(target);
       break;
     case 'country':
-      message = messages().getCountryMessage(target);
+      message = messages().country(target);
       break;
     case 'zip':
-      message = messages().getZipMessage(target);
+      message = messages().zip(target);
       break;
     case 'password':
-      message = messages().getPasswordMessage(target);
+      message = messages().password(target);
       break;
     case 'password-confirmation':
-      message = messages().getPasswordConfirmationMessage(target);
+      message = messages().passwordConfirmation(target);
       break;
   }
   return message;
 };
 
 const messages = () => {
-  const getEmailMessage = (target) => {
+  const emptyField = 'You have to fill in stuff';
+
+  const email = (target) => {
     if(target.validity.typeMismatch) {
       return 'Entered value needs to be an e-mail address.';
     }
@@ -60,7 +73,7 @@ const messages = () => {
     }
   };
   
-  const getCountryMessage = (target) => {
+  const country = (target) => {
     if (target.validity.patternMismatch) {
       return 'Country name can not contain any numbers';
     }
@@ -69,13 +82,13 @@ const messages = () => {
     }
   };
 
-  const getZipMessage = (target) => {
+  const zip = (target) => {
     if (target.validity.patternMismatch) {
-      return "Zip should be in the format DK-0000 (yes, a Danish post code)";
+      return "Zip should be in a Danish postal code format, eg. 'DK-xxxx' or just 'xxxx'";
     }
   };
 
-  const getPasswordMessage = (target) => {
+  const password = (target) => {
    
     if (target.validity.patternMismatch) {
       return `<strong>Password must have:</strong><br>
@@ -90,16 +103,16 @@ const messages = () => {
     }
   };
 
-  const getPasswordConfirmationMessage = (target) => {
+  const passwordConfirmation = (target) => {
     const password = form.password.value;
     const passwordConfirmationValue = form['password-confirmation'].value;
-    console.log(form['password-confirmation'].pattern)
+
     if (target.validity.patternMismatch) {
       return "Passwords don't match";
     }    
   };
 
-  return { getEmailMessage, getCountryMessage, getZipMessage, getPasswordMessage, getPasswordConfirmationMessage };
+  return { emptyField, email, country, zip, password, passwordConfirmation };
 };
 
 const setPasswordConfirmationPattern = (target) => {
@@ -112,24 +125,12 @@ const renderErrorMessage = (errorElement, message) => {
   errorElement.classList.add('show');
 };
 
-const clearErrorMessage = (errorElem) => {
-  errorElem.classList.remove('show');
+const clearErrorMessage = (errorElement) => {
+  errorElement.classList.remove('show');
 };
 
 Array.from(form.elements).forEach(element => {
   if (element.name !== 'submit') element.addEventListener('blur', validateField);
 });
 
-const checkForm = (e) => {
-  if (!form.checkValidity()) {
-    e.preventDefault();
-    Array.from(form.elements).forEach(element => {
-      if (element.name !== 'submit') {
-        console.log(element.tagName)
-        validateField(element);
-      }
-    });
-  }
-};
-
-form.submit.addEventListener('click', checkForm);
+form.submit.addEventListener('click', validateForm);

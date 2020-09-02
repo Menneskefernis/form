@@ -84,12 +84,13 @@ form {
             background: blue;
             color: white;
             padding: 7px;
-            border-radius: 4px;
+            border-radius: 3px;
             font-size: 14px;
             z-index: -1;
 
             &.show {
                 display: block;
+                animation: error-animation 1s;
             }
 
             p {
@@ -115,14 +116,6 @@ form {
                 font-weight: bold;
                 margin-bottom: 3px;
             }
-
-            /*ul {
-                text-align: left;
-                margin-left: 30px;
-                li {
-                    list-style: disc;
-                }
-            }*/
         }
     }
     
@@ -154,5 +147,16 @@ form {
         border: none;
         border-radius: 4px;
         cursor: pointer;
+    }
+}
+
+@keyframes error-animation {
+    from {
+        left: 200%;
+        opacity: 0;
+    }
+    to {
+        left: 280px;
+        opacity: 1;
     }
 }

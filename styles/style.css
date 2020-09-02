@@ -92,20 +92,15 @@ form > div .error {
   background: blue;
   color: white;
   padding: 7px;
-  border-radius: 4px;
+  border-radius: 3px;
   font-size: 14px;
   z-index: -1;
-  /*ul {
-                text-align: left;
-                margin-left: 30px;
-                li {
-                    list-style: disc;
-                }
-            }*/
 }
 
 form > div .error.show {
   display: block;
+  -webkit-animation: error-animation 1s;
+          animation: error-animation 1s;
 }
 
 form > div .error p {
@@ -165,5 +160,27 @@ form button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+@-webkit-keyframes error-animation {
+  from {
+    left: 200%;
+    opacity: 0;
+  }
+  to {
+    left: 280px;
+    opacity: 1;
+  }
+}
+
+@keyframes error-animation {
+  from {
+    left: 200%;
+    opacity: 0;
+  }
+  to {
+    left: 280px;
+    opacity: 1;
+  }
 }
 /*# sourceMappingURL=style.css.map */
