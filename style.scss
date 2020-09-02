@@ -109,6 +109,20 @@ form {
                 width: 18px;
                 z-index: -1;
             }
+
+            strong {
+                display: inline-block;
+                font-weight: bold;
+                margin-bottom: 3px;
+            }
+
+            /*ul {
+                text-align: left;
+                margin-left: 30px;
+                li {
+                    list-style: disc;
+                }
+            }*/
         }
     }
     
@@ -124,6 +138,11 @@ form {
         outline: none;
 
         &:invalid {
+            border: 1px solid black;
+            box-shadow: 0 0 3px black;
+        }
+
+        &.input-error:invalid {
             border: 1px solid red;
             box-shadow: 0 0 3px red;
         }
@@ -134,6 +153,6 @@ form {
         color: white;
         border: none;
         border-radius: 4px;
+        cursor: pointer;
     }
 }
-

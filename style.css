@@ -95,6 +95,13 @@ form > div .error {
   border-radius: 4px;
   font-size: 14px;
   z-index: -1;
+  /*ul {
+                text-align: left;
+                margin-left: 30px;
+                li {
+                    list-style: disc;
+                }
+            }*/
 }
 
 form > div .error.show {
@@ -120,6 +127,12 @@ form > div .error .caret {
   z-index: -1;
 }
 
+form > div .error strong {
+  display: inline-block;
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+
 form label {
   display: block;
   margin-bottom: 7px;
@@ -134,6 +147,13 @@ form button {
 
 form input:invalid,
 form button:invalid {
+  border: 1px solid black;
+  -webkit-box-shadow: 0 0 3px black;
+          box-shadow: 0 0 3px black;
+}
+
+form input.input-error:invalid,
+form button.input-error:invalid {
   border: 1px solid red;
   -webkit-box-shadow: 0 0 3px red;
           box-shadow: 0 0 3px red;
@@ -144,5 +164,6 @@ form button {
   color: white;
   border: none;
   border-radius: 4px;
+  cursor: pointer;
 }
 /*# sourceMappingURL=style.css.map */

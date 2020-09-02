@@ -1,13 +1,18 @@
 const form = document.getElementById('form');
 
-const validateEmail = (e) => {
-  const target = e.target;
+const validateField = (e) => {
+  let target = e.target;
+  if (!target) target = e;
+
   const errorElement = target.parentNode.querySelector('.error');
+  if (target.name === 'password-confirmation') setPasswordConfirmationPattern(target);
   
   if (target.validity.valid) {
-    clearError(errorElement);
-  } else {
-    renderError(errorElement, getErrorMessage(target));
+    target.classList.remove('input-error');
+    clearErrorMessage(errorElement);
+  } else if (!target.validity.valid) {
+    target.classList.add('input-error');
+    renderErrorMessage(errorElement, getErrorMessage(target));
     positionError(target, errorElement);
   }
 };
@@ -39,8 +44,7 @@ const getErrorMessage = (target) => {
       message = messages().getPasswordMessage(target);
       break;
     case 'password-confirmation':
-      console.log('john')
-      message = messages().getPasswordConfirmationMessage();
+      message = messages().getPasswordConfirmationMessage(target);
       break;
   }
   return message;
@@ -72,40 +76,60 @@ const messages = () => {
   };
 
   const getPasswordMessage = (target) => {
+   
     if (target.validity.patternMismatch) {
-      return `Password must have:<br>
-      - A length of at least 8<br>
-      - One or more uppercase characters<br>
-      - One or more lowercase characters<br>
-      - One or more numeric values<br>
-      - One or more special characters
+      return `<strong>Password must have:</strong><br>
+      <ul>
+        <li>A length of at least 8</li>
+        <li>One or more uppercase characters</li>
+        <li>One or more lowercase characters</li>
+        <li>One or more numeric values</li>
+        <li>One or more special characters</li>
+      </ul>
       `;
     }
   };
 
-  const getPasswordConfirmationMessage = () => {
+  const getPasswordConfirmationMessage = (target) => {
     const password = form.password.value;
     const passwordConfirmationValue = form['password-confirmation'].value;
-    console.log(password)
-    console.log(passwordConfirmationValue)
+    console.log(form['password-confirmation'].pattern)
+    if (target.validity.patternMismatch) {
+      return "Passwords don't match";
+    }    
   };
 
   return { getEmailMessage, getCountryMessage, getZipMessage, getPasswordMessage, getPasswordConfirmationMessage };
 };
 
+const setPasswordConfirmationPattern = (target) => {
+  const password = form.password.value;
+  target.setAttribute('pattern', `(?:^|\W)${password}(?:$|\W)`);
+};
 
-
-const renderError = (errorElement, message) => {
+const renderErrorMessage = (errorElement, message) => {
   errorElement.querySelector('p').innerHTML = message;
   errorElement.classList.add('show');
 };
 
-const clearError = (errorElem) => {
+const clearErrorMessage = (errorElem) => {
   errorElem.classList.remove('show');
 };
 
 Array.from(form.elements).forEach(element => {
-  if (element.tagName !== 'button') {
-    element.addEventListener('blur', validateEmail);
-  }
+  if (element.name !== 'submit') element.addEventListener('blur', validateField);
 });
+
+const checkForm = (e) => {
+  if (!form.checkValidity()) {
+    e.preventDefault();
+    Array.from(form.elements).forEach(element => {
+      if (element.name !== 'submit') {
+        console.log(element.tagName)
+        validateField(element);
+      }
+    });
+  }
+};
+
+form.submit.addEventListener('click', checkForm);
